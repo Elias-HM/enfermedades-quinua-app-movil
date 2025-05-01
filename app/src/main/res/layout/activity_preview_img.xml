@@ -7,4 +7,42 @@
     android:layout_height="match_parent"
     tools:context=".PreviewImgActivity">
 
+    <TextView
+        android:id="@+id/textView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="140dp"
+        android:layout_marginTop="56dp"
+        android:layout_marginEnd="141dp"
+        android:text="@string/previewImg_lbl_descripcion"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <ImageView
+        android:id="@+id/imageViewFoto"
+        android:layout_width="315dp"
+        android:layout_height="354dp"
+        android:layout_marginStart="48dp"
+        android:layout_marginTop="61dp"
+        android:layout_marginEnd="48dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="1.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/textView"
+        tools:srcCompat="@tools:sample/avatars" />
+
+    <Button
+        android:id="@+id/btnAnalizar"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="129dp"
+        android:layout_marginTop="57dp"
+        android:layout_marginEnd="130dp"
+        android:text="@string/previewImg_btn_analizarImagen"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/imageViewFoto" />
+
 </androidx.constraintlayout.widget.ConstraintLayout>

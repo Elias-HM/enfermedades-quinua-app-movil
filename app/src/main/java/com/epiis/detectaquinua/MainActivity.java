@@ -3,15 +3,10 @@ package com.epiis.detectaquinua;
 import android.content.Intent;
 import android.Manifest;
 import android.content.pm.PackageManager;
-import android.database.Cursor;
-import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
 import android.net.Uri;
 import android.os.Bundle;
 import android.provider.MediaStore;
-import android.util.Log;
 import android.widget.Button;
-import android.widget.ImageView;
 import android.widget.Toast;
 
 import androidx.activity.EdgeToEdge;
@@ -23,8 +18,6 @@ import androidx.core.content.FileProvider;
 import androidx.core.graphics.Insets;
 import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowInsetsCompat;
-
-import com.epiis.detectaquinua.network.ImageUploader;
 
 import java.io.File;
 import java.io.FileOutputStream;
@@ -40,9 +33,6 @@ public class MainActivity extends AppCompatActivity {
     private static final int REQUEST_IMAGE_PICK = 1;
     private static final int REQUEST_PERMISOS = 100;
 
-    private Button btnAnalizar;
-    private ImageView imageViewFoto;
-    private String imagePath = null;
     private String currentPhotoPath;
 
     @Override
@@ -56,20 +46,11 @@ public class MainActivity extends AppCompatActivity {
         btnAbrirCamara.setOnClickListener(v->{
             verificarPermisos();
         });
-        imageViewFoto = findViewById(R.id.imageViewFoto);
 
         //para abrir la galeria de fotos
         Button btnAbrirGaleria = findViewById(R.id.btnAbrirGaleria);
         btnAbrirGaleria.setOnClickListener(v -> {
             abrirGaleria();
-        });
-
-        btnAnalizar = findViewById(R.id.btnAnalizar);
-        btnAnalizar.setEnabled(false);
-        btnAnalizar.setOnClickListener(v -> {
-            if (imagePath != null) {
-                enviarImagenYMostrarResultado(imagePath);
-            }
         });
 
         ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.main), (v, insets) -> {
@@ -146,30 +127,22 @@ public class MainActivity extends AppCompatActivity {
         super.onActivityResult(requestCode, resultCode, data);
         //para tomar una foto con la camara
         if (requestCode == REQUEST_IMAGE_CAPTURE && resultCode == RESULT_OK) {
-            Bitmap bitmap = BitmapFactory.decodeFile(currentPhotoPath);
-            imageViewFoto.setImageBitmap(bitmap);
-            btnAnalizar.setEnabled(true);
-            imagePath = currentPhotoPath;
+            abrirVistaPrevia(currentPhotoPath);
         }
         //para seleccionar una foto d ela galeria
         if (requestCode == REQUEST_IMAGE_PICK && resultCode == RESULT_OK && data != null) {
             Uri imageUri = data.getData();
-            imageViewFoto.setImageURI(imageUri);
-            imagePath = copyUriToTempFile(imageUri); // Agrega esta línea
-            btnAnalizar.setEnabled(true);
+            String imagePathTemp = copyUriToTempFile(imageUri);
+            if (imagePathTemp != null) {
+                abrirVistaPrevia(imagePathTemp);
+            }
         }
 
     }
-    private String getRealPathFromURIs(Uri contentUri) {
-        String[] proj = { MediaStore.Images.Media.DATA };
-        Cursor cursor = getContentResolver().query(contentUri, proj, null, null, null);
-        if (cursor != null && cursor.moveToFirst()) {
-            int column_index = cursor.getColumnIndexOrThrow(MediaStore.Images.Media.DATA);
-            String path = cursor.getString(column_index);
-            cursor.close();
-            return path;
-        }
-        return null;
+    private void abrirVistaPrevia(String imagePath) {
+        Intent intent = new Intent(MainActivity.this, PreviewImgActivity.class);
+        intent.putExtra("imagePath", imagePath);
+        startActivity(intent);
     }
 
     private String copyUriToTempFile(Uri uri) {
@@ -194,36 +167,10 @@ public class MainActivity extends AppCompatActivity {
         }
     }
 
-
     //metodo para abrir la galeria
     private void abrirGaleria() {
         Intent intent = new Intent(Intent.ACTION_PICK, MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
         intent.setType("image/*");
         startActivityForResult(intent, REQUEST_IMAGE_PICK);
     }
-
-    private void enviarImagenYMostrarResultado(String imagePath) {
-        File imageFile = new File(imagePath);
-
-        ImageUploader.uploadImage(imageFile, new ImageUploader.UploadCallback() {
-            @Override
-            public void onSuccess(String response) {
-                // Abre nueva actividad y le pasa la ruta de la imagen y el resultado
-                Intent intent = new Intent(MainActivity.this, ResultadoActivity.class);
-                intent.putExtra("imagePath", imagePath);
-                intent.putExtra("resultado", response);
-                startActivity(intent);
-            }
-
-            @Override
-            public void onError(String error) {
-                runOnUiThread(() -> {
-                            Toast.makeText(MainActivity.this, "Error: " + error, Toast.LENGTH_SHORT).show();
-                    Log.d("Error", "Error: " + error);
-                        }
-                );
-            }
-        });
-    }
-
 }
