@@ -1,5 +1,16 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <color name="black">#FF000000</color>
-    <color name="white">#FFFFFFFF</color>
+    <!-- Colores principales -->
+    <color name="colorPrimary">#4CAF50</color>
+    <color name="colorPrimaryVariant">#388E3C</color>
+    <color name="colorSecondary">#A5D6A7</color>
+
+    <!-- Colores de alerta -->
+    <color name="colorAlert">#F57C00</color>
+    <color name="colorWarning">#FFB300</color>
+
+    <!-- Colores neutros -->
+    <color name="colorText">#212121</color>
+    <color name="colorBackground">#F5F5F5</color>
+    <color name="colorSurface">#FFFFFF</color>
 </resources>

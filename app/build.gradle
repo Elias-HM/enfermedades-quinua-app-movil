@@ -37,4 +37,8 @@ dependencies {
     testImplementation libs.junit
     androidTestImplementation libs.ext.junit
     androidTestImplementation libs.espresso.core
+
+    implementation libs.retrofit // Retrofit para manejar APIs
+    implementation libs.converter.gson // Para convertir JSON a objetos
+    implementation libs.okhttp // Cliente HTTP
 }

@@ -1,3 +1,8 @@
 <resources>
     <string name="app_name">Detecta Quinua</string>
+    <string name="main_lbl_descripcion">Diagnóstico rápido y preciso para tus hojas de quinua.</string>
+    <string name="main_btn_abrirCamara">Abrir Camara</string>
+    <string name="main_btn_abrirGaleria">Abrir Galeria</string>
+    <string name="main_btn_analizarImagen">Analizar Imagen</string>
+    <string name="main_btn_verHistorial">Ver Historial</string>
 </resources>

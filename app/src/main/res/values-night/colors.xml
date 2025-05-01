@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!-- Colores principales -->
+    <color name="colorPrimary">#81C784</color>
+    <color name="colorPrimaryVariant">#66BB6A</color>
+    <color name="colorSecondary">#C8E6C9</color>
+
+    <!-- Colores de alerta -->
+    <color name="colorAlert">#FF9800</color>
+    <color name="colorWarning">#FFCA28</color>
+
+    <!-- Colores neutros -->
+    <color name="colorText">#FFFFFF</color>
+    <color name="colorBackground">#121212</color>
+    <color name="colorSurface">#1E1E1E</color>
+</resources>

@@ -7,13 +7,89 @@
     android:layout_height="match_parent"
     tools:context=".MainActivity">
 
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Hello World!"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
+
+    <ImageView
+        android:id="@+id/img_logo"
+        android:layout_width="50dp"
+        android:layout_height="50dp"
+        android:layout_marginStart="104dp"
+        android:layout_marginTop="16dp"
+        android:src="@drawable/logo_app"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/lbl_appname"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="10dp"
+        android:layout_marginTop="28dp"
+        android:layout_marginEnd="107dp"
+        android:text="@string/app_name"
+        android:textSize="20sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/img_logo"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/lbl_descripcion"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="28dp"
+        android:layout_marginTop="20dp"
+        android:width="350dp"
+        android:text="@string/main_lbl_descripcion"
+        android:textAlignment="center"
+        android:textSize="16sp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/img_logo" />
+
+    <Button
+        android:id="@+id/btnAbrirGaleria"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="10dp"
+        android:layout_marginTop="20dp"
+        android:layout_marginEnd="76dp"
+        android:text="@string/main_btn_abrirGaleria"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/btnAbrirCamara"
+        app:layout_constraintTop_toBottomOf="@+id/lbl_descripcion" />
+
+    <Button
+        android:id="@+id/btnAbrirCamara"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="76dp"
+        android:layout_marginTop="20dp"
+        android:layout_marginEnd="10dp"
+        android:text="@string/main_btn_abrirCamara"
+        app:layout_constraintEnd_toStartOf="@+id/btnAbrirGaleria"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/lbl_descripcion" />
+
+    <ImageView
+        android:id="@+id/imageViewFoto"
+        android:layout_width="315dp"
+        android:layout_height="354dp"
+        android:layout_marginStart="48dp"
+        android:layout_marginTop="44dp"
+        android:layout_marginEnd="48dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/btnAbrirCamara"
+        tools:srcCompat="@tools:sample/avatars" />
+
+    <Button
+        android:id="@+id/btnAnalizar"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="129dp"
+        android:layout_marginTop="30dp"
+        android:layout_marginEnd="130dp"
+        android:text="@string/main_btn_analizarImagen"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/imageViewFoto" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
