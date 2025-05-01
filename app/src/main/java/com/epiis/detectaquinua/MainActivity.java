@@ -21,11 +21,10 @@ import androidx.core.view.WindowInsetsCompat;
 
 import com.epiis.detectaquinua.data.db.AppDatabase;
 import com.epiis.detectaquinua.data.entity.HistorialConsulta;
+import com.yalantis.ucrop.UCrop;
 
 import java.io.File;
-import java.io.FileOutputStream;
 import java.io.IOException;
-import java.io.InputStream;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
@@ -34,7 +33,7 @@ public class MainActivity extends AppCompatActivity {
 
     //para usar la camara
     private static final int REQUEST_IMAGE_CAPTURE = 1;
-    private static final int REQUEST_IMAGE_PICK = 1;
+    private static final int REQUEST_IMAGE_PICK = 2;
     private static final int REQUEST_PERMISOS = 100;
 
     private String currentPhotoPath;
@@ -156,46 +155,59 @@ public class MainActivity extends AppCompatActivity {
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
-        //para tomar una foto con la camara
-        if (requestCode == REQUEST_IMAGE_CAPTURE && resultCode == RESULT_OK) {
-            abrirVistaPrevia(currentPhotoPath);
+
+        //para recortar la imagen
+        if (requestCode == UCrop.REQUEST_CROP && resultCode == RESULT_OK && data != null) {
+            Uri resultUri = UCrop.getOutput(data);
+            if (resultUri != null) {
+                abrirVistaPrevia(resultUri.getPath()); // Solo vista previa de la recortada
+            } else {
+                Toast.makeText(this, "Error al obtener imagen recortada", Toast.LENGTH_SHORT).show();
+            }
+            return;
         }
-        //para seleccionar una foto d ela galeria
+        if (requestCode == UCrop.RESULT_ERROR && data != null) {
+            Throwable cropError = UCrop.getError(data);
+            Toast.makeText(this, "Error al recortar la imagen: " + cropError.getMessage(), Toast.LENGTH_SHORT).show();
+            return;
+        }
+
+        // Imagen desde cámara
+        if (requestCode == REQUEST_IMAGE_CAPTURE && resultCode == RESULT_OK) {
+            if (currentPhotoPath != null) {
+                Uri imageUri = Uri.fromFile(new File(currentPhotoPath));
+                iniciarRecorte(imageUri);
+            } else {
+                Toast.makeText(this, "Error: ruta de la imagen no encontrada", Toast.LENGTH_SHORT).show();
+            }
+            return;
+        }
+
+        // Imagen desde galería
         if (requestCode == REQUEST_IMAGE_PICK && resultCode == RESULT_OK && data != null) {
             Uri imageUri = data.getData();
-            String imagePathTemp = copyUriToTempFile(imageUri);
-            if (imagePathTemp != null) {
-                abrirVistaPrevia(imagePathTemp);
+            if (imageUri != null) {
+                iniciarRecorte(imageUri);
+            } else {
+                Toast.makeText(this, "Error al seleccionar la imagen", Toast.LENGTH_SHORT).show();
             }
         }
-
     }
+    //para recortar la imagen
+    private void iniciarRecorte(Uri sourceUri) {
+        String timeStamp = new SimpleDateFormat("yyyyMMdd_HHmmss").format(new Date());
+        Uri destUri = Uri.fromFile(new File(getCacheDir(), "imagen_"+timeStamp+".jpg"));
+
+        UCrop.of(sourceUri, destUri)
+                .withAspectRatio(244, 220)
+                .withMaxResultSize(244, 220)
+                .start(this);
+    }
+
     private void abrirVistaPrevia(String imagePath) {
-        Intent intent = new Intent(MainActivity.this, PreviewImgActivity.class);
+        Intent intent = new Intent(this, PreviewImgActivity.class);
         intent.putExtra("imagePath", imagePath);
         startActivity(intent);
-    }
-
-    private String copyUriToTempFile(Uri uri) {
-        try {
-            InputStream inputStream = getContentResolver().openInputStream(uri);
-            File tempFile = File.createTempFile("temp_image", ".jpg", getCacheDir());
-
-            FileOutputStream outputStream = new FileOutputStream(tempFile);
-            byte[] buffer = new byte[1024];
-            int length;
-            while ((length = inputStream.read(buffer)) > 0) {
-                outputStream.write(buffer, 0, length);
-            }
-
-            inputStream.close();
-            outputStream.close();
-
-            return tempFile.getAbsolutePath();
-        } catch (IOException e) {
-            e.printStackTrace();
-            return null;
-        }
     }
 
     //metodo para abrir la galeria
