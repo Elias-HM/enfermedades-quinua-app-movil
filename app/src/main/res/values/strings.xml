@@ -11,4 +11,14 @@
     <!-- Preview Img Activity -->
     <string name="previewImg_lbl_descripcion">Previsualizar imagen</string>
     <string name="previewImg_btn_analizarImagen">Analizar Imagen</string>
+
+    <!-- Detalle Historial Activity -->
+    <string name="detHistorial_img">Imagen Analizar</string>
+    <string name="detHistorial_lbl_fecha">Fecha: </string>
+    <string name="detHistorial_lbl_prediccion">Predicción: </string>
+    <string name="detHistorial_lbl_precision">Precisión: </string>
+    <string name="detHistorial_btn_eliminar">Eliminar Registro</string>
+
+    <!-- Item Historial Activity -->
+    <string name="itemHistorial_btn_eliminar">Eliminar</string>
 </resources>

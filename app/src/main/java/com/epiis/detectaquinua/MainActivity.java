@@ -19,12 +19,16 @@ import androidx.core.graphics.Insets;
 import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowInsetsCompat;
 
+import com.epiis.detectaquinua.data.db.AppDatabase;
+import com.epiis.detectaquinua.data.entity.HistorialConsulta;
+
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.List;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -34,12 +38,38 @@ public class MainActivity extends AppCompatActivity {
     private static final int REQUEST_PERMISOS = 100;
 
     private String currentPhotoPath;
+    //para ver el historial
+    Button btnHistorial;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         EdgeToEdge.enable(this);
         setContentView(R.layout.activity_main);
+
+        ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.main), (v, insets) -> {
+            Insets systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars());
+            v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom);
+            return insets;
+        });
+
+        // En tu HistorialActivity.java (en onResume() o donde quieras verificar)
+
+        List<HistorialConsulta> historialCompleto = AppDatabase.getInstance(this).historialDao().obtenerHistorial();
+
+        android.util.Log.d("ConteoHistorial", "Número de registros en el historial: " + historialCompleto.size());
+
+// Iterar a través de la lista e imprimir cada objeto (o propiedades específicas)
+        for (HistorialConsulta consulta : historialCompleto) {
+            android.util.Log.d("RegistroHistorial", "ID: " + consulta.id +
+                    ", Fecha: " + consulta.fecha +
+                    ", Imagen: " + consulta.rutaImagen +
+                    ", Predicción: " + consulta.prediccion +
+                    ", Precisión: " + consulta.precision);
+        }
+
+// Si solo quieres ver la representación String de la lista (puede ser muy largo)
+        android.util.Log.d("ListaHistorialCompleta", "Contenido completo del historial: " + historialCompleto.toString());
 
         //para la camara
         Button btnAbrirCamara = findViewById(R.id.btnAbrirCamara);
@@ -53,10 +83,11 @@ public class MainActivity extends AppCompatActivity {
             abrirGaleria();
         });
 
-        ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.main), (v, insets) -> {
-            Insets systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars());
-            v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom);
-            return insets;
+        btnHistorial = findViewById(R.id.btnHistorial);
+
+        btnHistorial.setOnClickListener(v -> {
+            Intent intent = new Intent(MainActivity.this, HistorialActivity.class);
+            startActivity(intent);
         });
     }
 
