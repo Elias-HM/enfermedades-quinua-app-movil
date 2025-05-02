@@ -1,5 +1,6 @@
 package com.epiis.detectaquinua.network;
 
+import com.epiis.detectaquinua.BuildConfig;
 import java.io.File;
 import java.io.IOException;
 
@@ -21,6 +22,7 @@ public class ImageUploader {
 
     public static void uploadImage(File imageFile, UploadCallback callback) {
         OkHttpClient client = ApiClient.getClient();
+        String apiUrl = BuildConfig.API_BASE_URL;
 
         RequestBody fileBody = RequestBody.create(imageFile, MediaType.parse("image/jpeg"));
 
@@ -30,7 +32,7 @@ public class ImageUploader {
                 .build();
 
         Request request = new Request.Builder()
-                .url("http://192.168.18.26:8000/predict")  // Cambia por tu endpoint real
+                .url(apiUrl + "/predict")  // url en modo local
                 .post(requestBody)
                 .build();
 
@@ -51,4 +53,3 @@ public class ImageUploader {
         });
     }
 }
-
