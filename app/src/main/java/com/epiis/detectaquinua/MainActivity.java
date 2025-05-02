@@ -5,6 +5,7 @@ import android.Manifest;
 import android.content.pm.PackageManager;
 import android.net.Uri;
 import android.os.Bundle;
+import android.os.Environment;
 import android.provider.MediaStore;
 import android.widget.Button;
 import android.widget.Toast;
@@ -141,12 +142,8 @@ public class MainActivity extends AppCompatActivity {
     private File createImageFile() throws IOException {
         String timeStamp = new SimpleDateFormat("yyyyMMdd_HHmmss").format(new Date());
         String imageFileName = "JPEG_" + timeStamp + "_";
-        File storageDir = getExternalFilesDir(null);
-        File image = File.createTempFile(
-                imageFileName,
-                ".jpg",
-                storageDir
-        );
+        File storageDir = getCacheDir();
+        File image = File.createTempFile(imageFileName, ".jpg", storageDir);
 
         currentPhotoPath = image.getAbsolutePath();
         return image;
@@ -196,7 +193,10 @@ public class MainActivity extends AppCompatActivity {
     //para recortar la imagen
     private void iniciarRecorte(Uri sourceUri) {
         String timeStamp = new SimpleDateFormat("yyyyMMdd_HHmmss").format(new Date());
-        Uri destUri = Uri.fromFile(new File(getCacheDir(), "imagen_"+timeStamp+".jpg"));
+        String fileName = "imagen_recortada_" + timeStamp + ".jpg";
+
+        File destinoPermanente = new File(getExternalFilesDir(Environment.DIRECTORY_PICTURES), fileName);
+        Uri destUri = Uri.fromFile(destinoPermanente);
 
         UCrop.of(sourceUri, destUri)
                 .withAspectRatio(244, 220)
