@@ -4,6 +4,7 @@ import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.os.Bundle;
+import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.Toast;
@@ -14,6 +15,7 @@ import androidx.core.graphics.Insets;
 import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowInsetsCompat;
 
+import com.airbnb.lottie.LottieAnimationView;
 import com.epiis.detectaquinua.data.db.AppDatabase;
 import com.epiis.detectaquinua.data.entity.HistorialConsulta;
 import com.epiis.detectaquinua.network.ImageUploader;
@@ -27,7 +29,9 @@ import java.util.Locale;
 
 public class PreviewImgActivity extends AppCompatActivity {
 
+
     private String imagePath;
+    LottieAnimationView lottieLoading;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -42,6 +46,7 @@ public class PreviewImgActivity extends AppCompatActivity {
         //inicializar los objetos
         ImageView imagePreview;
         Button btnAnalizar;
+        lottieLoading = findViewById(R.id.lottieLoading);
 
         // Obtenemos la ruta desde el intent
         imagePath = getIntent().getStringExtra("imagePath");
@@ -62,12 +67,18 @@ public class PreviewImgActivity extends AppCompatActivity {
 
         // Consumir la API cuando se presiona el botón
         btnAnalizar.setOnClickListener(v -> {
+
+            lottieLoading.setVisibility(View.VISIBLE);  // Mostrar animación
             if (imagePath != null) {
+                btnAnalizar.setEnabled(false);  // Deshabilita el botón mientras carga
+
                 File imageFile = new File(imagePath);
                 ImageUploader.uploadImage(imageFile, new ImageUploader.UploadCallback() {
                     @Override
                     public void onSuccess(String response) {
                         runOnUiThread(() -> {
+                            lottieLoading.setVisibility(View.GONE);  // Ocultar animación
+                            btnAnalizar.setEnabled(true);  // Vuelve a habilitar el botón
                             try {
                                 JSONObject respuesta = new JSONObject(response);
 
@@ -89,9 +100,11 @@ public class PreviewImgActivity extends AppCompatActivity {
                     }
                     @Override
                     public void onError(String error) {
-                        runOnUiThread(() ->
-                                Toast.makeText(PreviewImgActivity.this, "Error: " + error, Toast.LENGTH_SHORT).show()
-                        );
+                        runOnUiThread(() -> {
+                            lottieLoading.setVisibility(View.GONE);  // Ocultar animación
+                            btnAnalizar.setEnabled(true);  // Vuelve a habilitar el botón
+                            Toast.makeText(PreviewImgActivity.this, "Error: " + error, Toast.LENGTH_SHORT).show();
+                        });
                     }
                 });
             }
