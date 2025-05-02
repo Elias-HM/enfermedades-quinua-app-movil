@@ -5,12 +5,11 @@ import android.os.Bundle;
 import android.widget.Toast;
 
 import androidx.activity.EdgeToEdge;
-import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.Toolbar;
 import androidx.core.graphics.Insets;
 import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowInsetsCompat;
 import androidx.recyclerview.widget.GridLayoutManager;
-import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.epiis.detectaquinua.data.db.AppDatabase;
@@ -20,7 +19,7 @@ import com.epiis.detectaquinua.ui.adapter.HistorialAdapter;
 import java.text.DecimalFormat;
 import java.util.List;
 
-public class HistorialActivity extends AppCompatActivity {
+public class HistorialActivity extends BaseActivity {
 
     private RecyclerView recyclerView;
     private HistorialAdapter adapter;
@@ -29,12 +28,15 @@ public class HistorialActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         EdgeToEdge.enable(this);
-        setContentView(R.layout.activity_historial);
+        setActivityLayout(R.layout.activity_historial);
         ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.main), (v, insets) -> {
             Insets systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars());
             v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom);
             return insets;
         });
+
+        Toolbar toolbar = findViewById(R.id.my_toolbar);
+        toolbar.setTitle(getString(R.string.historial_title));
 
         recyclerView = findViewById(R.id.recyclerHistorial);
         //modo de vista del historial

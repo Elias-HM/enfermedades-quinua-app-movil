@@ -9,11 +9,19 @@
     <string name="main_btn_verHistorial">Ver Historial</string>
 
     <!-- Preview Img Activity -->
+    <string name="previewImg_title">Vista Previa</string>
     <string name="previewImg_lbl_descripcion">Previsualizar imagen</string>
     <string name="previewImg_btn_analizarImagen">Analizar Imagen</string>
 
+    <!-- Resultado Activity -->
+    <string name="result_title">Respuesta</string>
+
+    <!-- Historial Activity -->
+    <string name="historial_title">Historial</string>
+
     <!-- Detalle Historial Activity -->
     <string name="detHistorial_img">Imagen Analizar</string>
+    <string name="detHistorial_title">Detalle de Consulta</string>
     <string name="detHistorial_lbl_fecha">Fecha: </string>
     <string name="detHistorial_lbl_prediccion">Predicción: </string>
     <string name="detHistorial_lbl_precision">Precisión: </string>
@@ -21,4 +29,10 @@
 
     <!-- Item Historial Activity -->
     <string name="itemHistorial_btn_eliminar">Eliminar</string>
+
+    <!-- Base Activity -->
+    <string name="base_lbl_autor">Desarrollado por Elias</string>
+
+    <!-- Menu Toolbar -->
+    <string name="menu_historial">Historial</string>
 </resources>
