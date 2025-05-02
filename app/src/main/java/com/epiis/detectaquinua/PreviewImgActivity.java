@@ -93,6 +93,7 @@ public class PreviewImgActivity extends AppCompatActivity {
                                 intent.putExtra("imagePath", imagePath);
                                 intent.putExtra("resultado", response);
                                 startActivity(intent);
+                                finish();
                             } catch (Exception e) {
                                 Toast.makeText(PreviewImgActivity.this, "Error al procesar la respuesta", Toast.LENGTH_SHORT).show();
                             }

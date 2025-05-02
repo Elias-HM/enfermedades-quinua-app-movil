@@ -199,8 +199,8 @@ public class MainActivity extends AppCompatActivity {
         Uri destUri = Uri.fromFile(destinoPermanente);
 
         UCrop.of(sourceUri, destUri)
-                .withAspectRatio(244, 220)
-                .withMaxResultSize(244, 220)
+                .withAspectRatio(238, 246)
+                //.withMaxResultSize(238, 246)
                 .start(this);
     }
 
