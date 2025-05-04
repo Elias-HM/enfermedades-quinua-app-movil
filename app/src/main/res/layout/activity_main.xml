@@ -10,51 +10,79 @@
 
     <TextView
         android:id="@+id/lbl_descripcion"
-        android:layout_width="wrap_content"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginStart="28dp"
-        android:layout_marginTop="100dp"
+        android:layout_marginStart="20dp"
+        android:layout_marginTop="30dp"
+        android:layout_marginEnd="20dp"
         android:width="350dp"
         android:text="@string/main_lbl_descripcion"
         android:textAlignment="center"
-        android:textSize="16sp"
+        android:textSize="20sp"
+        app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
-    <Button
-        android:id="@+id/btnAbrirGaleria"
-        android:layout_width="wrap_content"
+    <TextView
+        android:id="@+id/lbl_tituloConsejo"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginStart="10dp"
-        android:layout_marginTop="20dp"
-        android:layout_marginEnd="76dp"
-        android:text="@string/main_btn_abrirGaleria"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toEndOf="@+id/btnAbrirCamara"
+        android:layout_marginTop="30dp"
+        android:text="@string/main_lbl_tituloInstruccion"
+        android:textSize="18sp"
+        android:textStyle="bold"
+        android:textAlignment="center"
         app:layout_constraintTop_toBottomOf="@+id/lbl_descripcion" />
 
-    <Button
-        android:id="@+id/btnAbrirCamara"
+    <TextView
+        android:id="@+id/lbl_descripcionConsejo"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="20dp"
+        android:layout_marginEnd="20dp"
+        android:text="@string/main_lbl_contInstruccion"
+        android:textSize="16sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/lbl_tituloConsejo" />
+
+    <LinearLayout
+        android:id="@+id/botonesCamaraGaleriaLayout"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="76dp"
-        android:layout_marginTop="20dp"
-        android:layout_marginEnd="10dp"
-        android:text="@string/main_btn_abrirCamara"
-        app:layout_constraintEnd_toStartOf="@+id/btnAbrirGaleria"
+        android:layout_marginTop="50dp"
+        android:orientation="horizontal"
+        app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/lbl_descripcion" />
+        app:layout_constraintTop_toBottomOf="@+id/lbl_descripcionConsejo">
+
+        <Button
+            android:id="@+id/btnAbrirCamara"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/main_btn_abrirCamara"
+            app:icon="@drawable/img_camera" />
+
+        <Button
+            android:id="@+id/btnAbrirGaleria"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="16dp"
+            android:text="@string/main_btn_abrirGaleria"
+            app:icon="@drawable/img_gallery" />
+
+    </LinearLayout>
 
     <Button
         android:id="@+id/btnHistorial"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="143dp"
-        android:layout_marginTop="96dp"
-        android:layout_marginEnd="143dp"
+        android:layout_marginTop="50dp"
+        android:layout_marginBottom="50dp"
         android:text="@string/main_btn_verHistorial"
+        app:icon="@drawable/img_history"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/btnAbrirCamara" />
+        app:layout_constraintStart_toStartOf="parent" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

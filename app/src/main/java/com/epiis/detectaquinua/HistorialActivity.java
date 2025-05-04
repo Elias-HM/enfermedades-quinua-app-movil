@@ -59,15 +59,12 @@ public class HistorialActivity extends BaseActivity {
                 },
                 // Clic en item (ver detalle)
                 consulta -> {
-                    DecimalFormat df = new DecimalFormat("#.###%");
-                    String precision = df.format(consulta.precision);
-
                     Intent intent = new Intent(HistorialActivity.this, DetalleHistorialActivity.class);
                     intent.putExtra("id", consulta.id);
                     intent.putExtra("rutaImagen", consulta.rutaImagen);
                     intent.putExtra("fecha", consulta.fecha);
                     intent.putExtra("prediccion", consulta.prediccion);
-                    intent.putExtra("precision", precision);
+                    intent.putExtra("precision", consulta.precision);
                     startActivity(intent);
                 }
         );

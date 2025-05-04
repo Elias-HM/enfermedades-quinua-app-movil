@@ -2,11 +2,11 @@
   "formatVersion": 1,
   "database": {
     "version": 1,
-    "identityHash": "42df63536675d748fb96303edb66485e",
+    "identityHash": "7f49ff3dd43d03decb37a9511c8c6fa9",
     "entities": [
       {
         "tableName": "historial",
-        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`id` INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, `fecha` TEXT, `rutaImagen` TEXT, `prediccion` TEXT, `precision` REAL NOT NULL)",
+        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`id` INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, `fecha` TEXT, `rutaImagen` TEXT, `prediccion` TEXT, `precision` TEXT)",
         "fields": [
           {
             "fieldPath": "id",
@@ -32,8 +32,7 @@
           {
             "fieldPath": "precision",
             "columnName": "precision",
-            "affinity": "REAL",
-            "notNull": true
+            "affinity": "TEXT"
           }
         ],
         "primaryKey": {
@@ -46,7 +45,7 @@
     ],
     "setupQueries": [
       "CREATE TABLE IF NOT EXISTS room_master_table (id INTEGER PRIMARY KEY,identity_hash TEXT)",
-      "INSERT OR REPLACE INTO room_master_table (id,identity_hash) VALUES(42, '42df63536675d748fb96303edb66485e')"
+      "INSERT OR REPLACE INTO room_master_table (id,identity_hash) VALUES(42, '7f49ff3dd43d03decb37a9511c8c6fa9')"
     ]
   }
 }

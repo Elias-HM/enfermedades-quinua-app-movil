@@ -4,10 +4,10 @@ import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
 import android.widget.ImageView;
+import android.widget.ProgressBar;
 import android.widget.TextView;
 
 import androidx.activity.EdgeToEdge;
-import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 import androidx.core.graphics.Insets;
 import androidx.core.view.ViewCompat;
@@ -17,8 +17,9 @@ import java.io.File;
 
 public class ResultadoActivity extends BaseActivity {
 
-    private ImageView imageViewResultado;
-    private TextView txtResultado;
+    ImageView imageViewResultado;
+    TextView lblPrediccion, lblPrecision, lblInterpretacion;
+    ProgressBar progressBar;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -35,16 +36,29 @@ public class ResultadoActivity extends BaseActivity {
         toolbar.setTitle(getString(R.string.result_title));
 
         imageViewResultado = findViewById(R.id.imgResultado);
-        txtResultado = findViewById(R.id.lblResultado);
+        lblPrediccion = findViewById(R.id.lblPrediccion);
+        lblPrecision = findViewById(R.id.lblPrecision);
+        lblInterpretacion = findViewById(R.id.lblInterpretacionPrecision);
+        progressBar = findViewById(R.id.progressBarPrecision);
 
         Intent intent = getIntent();
         String imagePath = intent.getStringExtra("imagePath");
-        String resultado = intent.getStringExtra("resultado");
+        String prediccion = intent.getStringExtra("prediccion");
+        Double precision = Double.parseDouble(intent.getStringExtra("precision"));
+        String interpretacion = "";
+
+        if (precision>=90) interpretacion=getString(R.string.result_lbl_interpretacion_0);
+        else if (precision>=75) interpretacion=getString(R.string.result_lbl_interpretacion_1);
+        else if (precision>=60) interpretacion=getString(R.string.result_lbl_interpretacion_2);
+        else  interpretacion=getString(R.string.result_lbl_interpretacion_3);
 
         if (imagePath != null) {
             imageViewResultado.setImageURI(Uri.fromFile(new File(imagePath)));
         }
 
-        txtResultado.setText(resultado);
+        lblPrediccion.setText(getString(R.string.result_lbl_prediccion) + " " + prediccion);
+        lblPrecision.setText(getString(R.string.result_lbl_precision) + " " + precision + "%");
+        progressBar.setProgress(precision.intValue());
+        lblInterpretacion.setText(interpretacion);
     }
 }

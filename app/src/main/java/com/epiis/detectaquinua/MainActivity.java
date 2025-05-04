@@ -19,16 +19,12 @@ import androidx.core.content.FileProvider;
 import androidx.core.graphics.Insets;
 import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowInsetsCompat;
-
-import com.epiis.detectaquinua.data.db.AppDatabase;
-import com.epiis.detectaquinua.data.entity.HistorialConsulta;
 import com.yalantis.ucrop.UCrop;
 
 import java.io.File;
 import java.io.IOException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
-import java.util.List;
 
 public class MainActivity extends BaseActivity {
 
@@ -55,24 +51,6 @@ public class MainActivity extends BaseActivity {
 
         Toolbar toolbar = findViewById(R.id.my_toolbar);
         toolbar.setTitle(getString(R.string.app_name));
-
-        // En tu HistorialActivity.java (en onResume() o donde quieras verificar)
-
-        List<HistorialConsulta> historialCompleto = AppDatabase.getInstance(this).historialDao().obtenerHistorial();
-
-        android.util.Log.d("ConteoHistorial", "Número de registros en el historial: " + historialCompleto.size());
-
-// Iterar a través de la lista e imprimir cada objeto (o propiedades específicas)
-        for (HistorialConsulta consulta : historialCompleto) {
-            android.util.Log.d("RegistroHistorial", "ID: " + consulta.id +
-                    ", Fecha: " + consulta.fecha +
-                    ", Imagen: " + consulta.rutaImagen +
-                    ", Predicción: " + consulta.prediccion +
-                    ", Precisión: " + consulta.precision);
-        }
-
-// Si solo quieres ver la representación String de la lista (puede ser muy largo)
-        android.util.Log.d("ListaHistorialCompleta", "Contenido completo del historial: " + historialCompleto.toString());
 
         //para la camara
         Button btnAbrirCamara = findViewById(R.id.btnAbrirCamara);

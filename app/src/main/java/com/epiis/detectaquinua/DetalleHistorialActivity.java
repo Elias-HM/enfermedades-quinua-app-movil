@@ -7,6 +7,7 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.widget.Button;
 import android.widget.ImageView;
+import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -24,8 +25,9 @@ import java.io.File;
 public class DetalleHistorialActivity extends BaseActivity {
 
     ImageView img;
-    TextView txtFecha, txtPrediccion, txtPrecision;
+    TextView lblFecha, lblPrediccion, lblPrecision, lblInterpretacion;
     Button btnEliminar;
+    ProgressBar progressBar;
 
     private HistorialConsulta consulta;
 
@@ -45,10 +47,12 @@ public class DetalleHistorialActivity extends BaseActivity {
         toolbar.setTitle(getString(R.string.detHistorial_title));
 
         img = findViewById(R.id.imgDetalle);
-        txtFecha = findViewById(R.id.txtDetalleFecha);
-        txtPrediccion = findViewById(R.id.txtDetallePrediccion);
-        txtPrecision = findViewById(R.id.txtDetallePrecision);
+        lblFecha = findViewById(R.id.lblFecha);
+        lblPrediccion = findViewById(R.id.lblPrediccion);
+        lblPrecision = findViewById(R.id.lblPrecision);
         btnEliminar = findViewById(R.id.btnDetalleEliminar);
+        lblInterpretacion = findViewById(R.id.lblInterpretacionPrecision);
+        progressBar = findViewById(R.id.progressBarPrecision);
 
         consulta = (HistorialConsulta) getIntent().getSerializableExtra("consulta");
 
@@ -57,14 +61,22 @@ public class DetalleHistorialActivity extends BaseActivity {
         String ruta = intent.getStringExtra("rutaImagen");
         String fecha = intent.getStringExtra("fecha");
         String prediccion = intent.getStringExtra("prediccion");
-        String precision = intent.getStringExtra("precision");
+        Double precision = Double.parseDouble(intent.getStringExtra("precision"));
+        String interpretacion = "";
 
-        txtFecha.setText(getString( R.string.detHistorial_lbl_fecha) + " " + fecha);
-        txtPrediccion.setText(getString( R.string.detHistorial_lbl_prediccion) + " " + prediccion);
-        txtPrecision.setText(getString( R.string.detHistorial_lbl_precision) + " " + precision);
+        if (precision>=90) interpretacion=getString(R.string.result_lbl_interpretacion_0);
+        else if (precision>=75) interpretacion=getString(R.string.result_lbl_interpretacion_1);
+        else if (precision>=60) interpretacion=getString(R.string.result_lbl_interpretacion_2);
+        else  interpretacion=getString(R.string.result_lbl_interpretacion_3);
+
+
+        lblFecha.setText(getString( R.string.detHistorial_lbl_fecha) + " " + fecha);
+        lblPrediccion.setText(getString( R.string.detHistorial_lbl_prediccion) + " " + prediccion);
+        lblPrecision.setText(getString( R.string.detHistorial_lbl_precision) + " " + precision + "%");
+        progressBar.setProgress(precision.intValue());
+        lblInterpretacion.setText(interpretacion);
 
         img.setImageURI(Uri.fromFile(new File(ruta)));
-
 
         btnEliminar.setOnClickListener(v -> confirmarEliminacion());
     }

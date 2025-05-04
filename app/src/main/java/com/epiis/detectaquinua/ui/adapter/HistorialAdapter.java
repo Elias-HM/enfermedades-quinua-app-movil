@@ -16,7 +16,6 @@ import com.epiis.detectaquinua.R;
 import com.epiis.detectaquinua.data.entity.HistorialConsulta;
 
 import java.io.File;
-import java.text.DecimalFormat;
 import java.util.List;
 
 public class HistorialAdapter extends RecyclerView.Adapter<HistorialAdapter.ViewHolder> {
@@ -57,12 +56,9 @@ public class HistorialAdapter extends RecyclerView.Adapter<HistorialAdapter.View
     public void onBindViewHolder(ViewHolder holder, int position) {
         HistorialConsulta consulta = historialList.get(position);
 
-        DecimalFormat df = new DecimalFormat("#.###%");
-        String precision = df.format(consulta.precision);
-
         holder.txtFecha.setText(consulta.fecha);
         holder.txtPrediccion.setText(holder.itemView.getContext().getString(R.string.detHistorial_lbl_prediccion) + " " + consulta.prediccion);
-        holder.txtPrecision.setText(holder.itemView.getContext().getString(R.string.detHistorial_lbl_precision) + " " + precision);
+        holder.txtPrecision.setText(holder.itemView.getContext().getString(R.string.detHistorial_lbl_precision) + " " + consulta.precision + "%");
 
         holder.imageView.setImageURI(Uri.fromFile(new File(consulta.rutaImagen)));
 

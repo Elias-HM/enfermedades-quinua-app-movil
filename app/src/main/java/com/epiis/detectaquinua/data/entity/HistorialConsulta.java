@@ -11,5 +11,5 @@ public class HistorialConsulta {
     public String fecha;
     public String rutaImagen;
     public String prediccion;
-    public float precision;
+    public String precision;
 }

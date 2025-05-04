@@ -23,6 +23,7 @@ import com.epiis.detectaquinua.network.ImageUploader;
 import org.json.JSONObject;
 
 import java.io.File;
+import java.text.DecimalFormat;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.Locale;
@@ -89,13 +90,17 @@ public class PreviewImgActivity extends BaseActivity {
                                 JSONObject result = respuesta.getJSONArray("results").getJSONObject(0);
 
                                 String prediccion = result.getString("prediction");
-                                float precision = (float) result.getDouble("confidence");
+                                float preci = (float) result.getDouble("confidence");
+
+                                DecimalFormat df = new DecimalFormat("#.###");
+                                String precision = df.format(preci*100);
 
                                 guardarEnHistorial(imagePath, prediccion, precision);
 
                                 Intent intent = new Intent(PreviewImgActivity.this, ResultadoActivity.class);
                                 intent.putExtra("imagePath", imagePath);
-                                intent.putExtra("resultado", response);
+                                intent.putExtra("prediccion", prediccion);
+                                intent.putExtra("precision", precision);
                                 startActivity(intent);
                                 finish();
                             } catch (Exception e) {
@@ -115,7 +120,7 @@ public class PreviewImgActivity extends BaseActivity {
             }
         });
     }
-    private void guardarEnHistorial(String ruta, String prediccion, float precision) {
+    private void guardarEnHistorial(String ruta, String prediccion, String precision) {
         HistorialConsulta consulta = new HistorialConsulta();
         consulta.fecha = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss", Locale.getDefault()).format(new Date());
         consulta.rutaImagen = ruta;
